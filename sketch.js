@@ -2,43 +2,29 @@ const density = 'Ñ@#W$9876543210?!abc;:+=-,._ ';
 let banner;
 let pixelSize = 10;
 
-function preload() {
-    banner = loadImage("banner2.png");
-}
-
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    noCanvas(windowWidth, windowHeight);
 }
 
-function draw() {
-    background(0);
+function renderAscii(img) {
+    const cols = 120;
+    const cellW = img.width / cols;
+    const fontSize = cellW / 0.6;
+    const rows = round(img.height / fontSize);
+    const cellH = img.height / rows;
 
-    banner.loadPixels();
+    const small = img.get();
+    small.resize(cols, rows);
+    small.loadPixels();
 
-    let charWidth = width / (banner.width / pixelSize);
-    let charHeight = height / (banner.height / pixelSize);
-
-    for (let i = 0; i < banner.height; i += pixelSize) {
-        for (let j = 0; j < banner.width; j += pixelSize) {
-            const pixelIndex = (i * banner.width + j) * 4;
-            const r = banner.pixels[pixelIndex + 0];
-            const g = banner.pixels[pixelIndex + 1];
-            const b = banner.pixels[pixelIndex + 2];
-            const avg = (r + g + b) / 3;
-
-            noStroke();
-            fill(255);
-
-            const len = density.length;
-            const charIndex = floor(map(avg, 0, 255, len, 0));
-
-            textSize(min(charWidth, charHeight) * 0.9);
-            textAlign(CENTER, CENTER);
-            text(density.charAt(charIndex), (j / pixelSize) * charWidth + charWidth * 0.5, (i / pixelSize) * charHeight + charHeight * 0.5);        
+    let out = '';
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+            const i = (y * cols + x) * 4;
+            const avg = (small.pixels[i] + small.pixels[i+1] + small.pixels[i+2]) / 3;
+                
+            out += density.charAt(floor(map(avg, 0, 255, density.length - 1, 0)));
         }
+        out += '\n';
     }
-}
-
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
 }

@@ -10,3 +10,15 @@ html, body {
 canvas {
     display: block;
 }
+
+#asciiOutput {
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+    overflow: hidden;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+pre {
+    background-color: #000;
+}

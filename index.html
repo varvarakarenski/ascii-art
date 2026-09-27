@@ -7,12 +7,15 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <h1>ASCII Banner Maker</h1>
-        <p>Upload an image and convert it to ASCII text art</p>
-        <form id="uploadform">
+        <center><h1>ASCII Banner Maker</h1></center>
+        <center><p>Upload an image and convert it to ASCII text art</p></center>
+        <form id="uploadForm">
             <input type="file" id="fileInput" name="myFile">
             <button type="submit">Submit</button>
         </form>
+        <div class="overflow: auto">
+            <pre id="asciiOutput"></pre>
+        </div>
         <script>
             const form = document.getElementById('uploadForm');
 
@@ -20,19 +23,13 @@
                 e.preventDefault(); 
 
                 const fileInput = document.getElementById('fileInput');
-                const formData = new FormData();
+                const file = fileInput.files[0];
+                if (!file) return;
 
-                formData.append('myFile', fileInput.files[0]);
+                const url = URL.createObjectURL(file);
+                loadImage(url, img => renderAscii(img));
 
-                try {
-                    const response = await fetch('http://localhost:3000/upload', {
-                        method: 'POST',
-                        body: formData
-                    });
-                } catch (error) {
-                    console.error('Error uploading file:', error);
-                }
-            })
+            });
         </script>
         <script src="sketch.js">
 
