@@ -5,6 +5,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="utf-8">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='29 -1054 1207 1207'><path transform='scale(1,-1)' d='M799 0V48Q722 7 629 -14Q536 -34 460 -34Q295 -34 192 54Q89 141 89 247Q89 376 220 486Q352 597 584 597Q677 597 799 577V626Q799 672 760 701Q720 730 609 730Q518 730 373 694Q319 681 289 681Q248 681 220 710Q191 740 191 786Q191 812 201 831Q211 850 229 862Q247 873 304 889Q380 910 459 922Q538 935 602 935Q793 935 898 852Q1004 770 1004 627V205H1039Q1113 205 1144 176Q1176 148 1176 102Q1176 57 1144 28Q1113 0 1039 0ZM799 367Q676 391 572 391Q447 391 357 330Q301 291 301 251Q301 222 328 204Q378 171 465 171Q539 171 632 200Q726 229 799 279Z'/></svg>">
     </head>
     <body>
         <h1>ASCII Banner Maker</h1>
@@ -55,7 +56,6 @@
             });
 
             document.getElementById('saveBtn').addEventListener('click', () => {
-                // redraw the <pre> onto a canvas, 2x for sharpness
                 const pre = document.getElementById('asciiOutput');
                 const style = getComputedStyle(pre);
                 const box = getComputedStyle(document.getElementById('output'));
