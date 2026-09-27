@@ -1,4 +1,4 @@
-# ASCII Banner Maker 
+# ASCII Banner Maker 🎨 👾
 
 A small web page that turns an image into ASCII text art :)
 
