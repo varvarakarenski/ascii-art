@@ -7,6 +7,33 @@
         <meta charset="utf-8">
     </head>
     <body>
+        <h1>ASCII Banner Maker</h1>
+        <p>Upload an image and convert it to ASCII text art</p>
+        <form id="uploadform">
+            <input type="file" id="fileInput" name="myFile">
+            <button type="submit">Submit</button>
+        </form>
+        <script>
+            const form = document.getElementById('uploadForm');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault(); 
+
+                const fileInput = document.getElementById('fileInput');
+                const formData = new FormData();
+
+                formData.append('myFile', fileInput.files[0]);
+
+                try {
+                    const response = await fetch('http://localhost:3000/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                }
+            })
+        </script>
         <script src="sketch.js">
 
         </script>
