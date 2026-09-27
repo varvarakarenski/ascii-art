@@ -7,6 +7,28 @@ html, body {
     line-height: 20pt;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1, p {
+    text-align: center;
+}
+
+footer {
+    margin-top: auto;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+footer a {
+    color: #000;
+    text-decoration: none;
+}
+
 canvas {
     display: block;
 }
@@ -19,6 +41,118 @@ canvas {
     font-family: 'Courier New', Courier, monospace;
 }
 
-pre {
+#output {
+    width: fit-content;
+    margin: 20px auto;
+    padding: 16px;
+    border: 2px solid #000;
+    border-radius: 12px;
+    background-color: #FFF;
+    color: #000;
+}
+
+#output .button {
+    margin: 0 8px 12px 0;
+}
+
+#output:has(pre:empty) {
+    display: none;
+}
+
+body:has(#bgToggle:checked) #output {
     background-color: #000;
+    color: #FFF;
+}
+
+.toggle-label {
+    font-size: 16px;
+    margin: 0 8px;
+}
+
+[for="pixelSlider"] {
+    margin-left: 32px;
+}
+
+#pixelSlider {
+    accent-color: #000;
+    cursor: pointer;
+}
+
+.toggles {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 10px;
+    background-color: #FFF;
+    color: #000;
+    font-family: 'Courier New', Courier, monospace;
+    border: 2px solid #000;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#fileInput {
+    font: inherit;
+    cursor: pointer;
+}
+
+#fileInput::file-selector-button {
+    display: none;
+}
+
+.button:hover {
+    transform: scale(0.98);
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #FFF;
+    border: 2px solid #000;
+    border-radius: 34px;
+    transition: background-color 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #000;
+    border-radius: 50%;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+    background-color: #000;
+}
+
+.toggle-switch input:checked + .slider::before {
+    background-color: #FFF;
+    transform: translateX(26px);
 }

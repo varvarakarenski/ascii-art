@@ -7,15 +7,31 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <center><h1>ASCII Banner Maker</h1></center>
-        <center><p>Upload an image and convert it to ASCII text art</p></center>
-        <form id="uploadForm">
-            <input type="file" id="fileInput" name="myFile">
-            <button type="submit">Submit</button>
-        </form>
-        <div class="overflow: auto">
+        <h1>ASCII Banner Maker</h1>
+        <p>Upload an image and convert it to ASCII text art!</p>
+        <div class="toggles">
+            <form id="uploadForm">
+                <label class="button">Choose file: <input type="file" id="fileInput" name="myFile"></label>
+                <button class = "button" type="submit">Submit</button>
+            </form>
+            <span class="toggle-label">White</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="bgToggle" aria-label="Black background">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label">Black</span>
+            <label class="toggle-label" for="pixelSlider">Pixel size</label>
+            <input type="range" id="pixelSlider" min="4" max="30" value="10">
+        </div>
+    
+        <div id="output">
+            <button class="button" id="copyBtn">Copy</button>
+            <button class="button" id="saveBtn">Save image</button>
             <pre id="asciiOutput"></pre>
         </div>
+        <footer>
+            <a href="https://github.com/varvarakarenski/ascii-art">GitHub</a>
+        </footer>
         <script>
             const form = document.getElementById('uploadForm');
 
@@ -29,6 +45,38 @@
                 const url = URL.createObjectURL(file);
                 loadImage(url, img => renderAscii(img));
 
+            });
+
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.addEventListener('click', async () => {
+                await navigator.clipboard.writeText(document.getElementById('asciiOutput').textContent);
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => copyBtn.textContent = 'Copy', 1500);
+            });
+
+            document.getElementById('saveBtn').addEventListener('click', () => {
+                // redraw the <pre> onto a canvas, 2x for sharpness
+                const pre = document.getElementById('asciiOutput');
+                const style = getComputedStyle(pre);
+                const box = getComputedStyle(document.getElementById('output'));
+                const lineH = parseFloat(style.lineHeight);
+                const k = 2;
+                const canvas = document.createElement('canvas');
+                canvas.width = pre.offsetWidth * k;
+                canvas.height = pre.offsetHeight * k;
+                const ctx = canvas.getContext('2d');
+                ctx.scale(k, k);
+                ctx.fillStyle = box.backgroundColor;
+                ctx.fillRect(0, 0, pre.offsetWidth, pre.offsetHeight);
+                ctx.fillStyle = box.color;
+                ctx.font = `${style.fontSize} ${style.fontFamily}`;
+                ctx.textBaseline = 'middle';
+                pre.textContent.split('\n').forEach((line, i) => ctx.fillText(line, 0, (i + 0.5) * lineH));
+
+                const a = document.createElement('a');
+                a.download = 'ascii-art.png';
+                a.href = canvas.toDataURL('image/png');
+                a.click();
             });
         </script>
         <script src="sketch.js">
