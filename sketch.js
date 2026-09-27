@@ -1,21 +1,23 @@
-const density = '@%#*+=-:.';
+const density = 'Ñ@#W$9876543210?!abc;:+=-,._ ';
+let banner;
 
 function preload() {
     banner = loadImage("banner.jpeg");
 }
+
 function setup() {
     createCanvas(400, 400);
 }
 
 function draw() {
     background(0);
-    //image(banner, 0, 0, width, height);
-    banner.loadPixels();
+
     let w = width / banner.width;
     let h = height / banner.height;
+    banner.loadPixels();
 
-    for (let i = 0; i < banner.width; i++) {
-        for (let j = 0; j < banner.height; j++) {
+    for (let i = 0; i < banner.height; i++) {
+        for (let j = 0; j < banner.width; j++) {
             const pixelIndex = (i + j * banner.width) * 4;
             const r = banner.pixels[pixelIndex + 0];
             const g = banner.pixels[pixelIndex + 1];
@@ -23,8 +25,7 @@ function draw() {
             const avg = (r + g + b) / 3;
 
             noStroke();
-            fill(r, g, b);
-            //square(i * w, j * h, w);
+            fill(255);
 
             const len = density.length;
             const charIndex = floor(map(avg, 0, 255, len, 0));
@@ -34,4 +35,6 @@ function draw() {
             text(density.charAt(charIndex), i * w + w * 0.5, j * h + h * 0.5);
         }
     }
+
+
 }
